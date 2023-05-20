@@ -6,7 +6,7 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:22:56 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/20 13:14:16 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/20 13:20:32 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ typedef struct s_param
 {
 	int				six;
 	int				info[5];
+	int				philo_count;
+	int				time_die;
+	int				time_eat;
+	int				time_sleep;
+	int				time_think;
+	int				eat_goal;
 	pthread_t		*tid;
 	pthread_t		m_tid;
 	pthread_mutex_t	stop;
@@ -57,7 +63,7 @@ int	ft_init(int argc, char **argv, t_param *param);
 int ft_strlen(char *s);
 // int ft_atoi(char *s);
 int	ft_atoi(const char *str);
-int set_info(char *s, int i, t_param *param);
+// int set_info(char *s, int i, t_param *param);
 int init_param(t_param *param);
 int init_each(t_param *param, t_each *each);
 double get_time(void);

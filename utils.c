@@ -6,7 +6,7 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:23:00 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/20 12:59:33 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/20 13:30:44 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int check_eat(t_param *param)
 	int i;
 
 	i = 0;
-	while (i < param->info[0])
+	while (i < param->philo_count)
 	{
-		if (param->eat_time[i++] < param->info[4])
+		if (param->eat_time[i++] < param->eat_goal)
 			return (-1);
 	}
 	return (1);

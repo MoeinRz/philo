@@ -6,7 +6,7 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:22:45 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/20 13:03:51 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/20 13:22:23 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void *monitoring(void *arg)
 
 	param = (t_param *)arg;
 
-	usleep(2000 * (param->info[0] - 1));
+	usleep(2000 * (param->philo_count - 1));
 	init = get_time();
 	while (param->is_dead)
 	{
@@ -35,14 +35,14 @@ void *monitoring(void *arg)
 			break;
 		}
 		i = 0;
-		while (i < param->info[0])
+		while (i < param->philo_count)
 		{
 			param->last_meal[i] += 1;
-			if (param->last_meal[i] >= param->info[1])
+			if (param->last_meal[i] >= param->time_die)
 			{
 				param->is_dead = 0;
 				printf("%.f ms philo%d died\n", get_time() - init, i + 1);
-				locks = param->info[1];
+				locks = param->time_die;
 				while (locks)
 					pthread_mutex_unlock(&param->mutex[locks--]);
 				break;
@@ -104,7 +104,7 @@ int philo(t_param *param)
 	pthread_detach(param->m_tid);
 
 	i = 0;
-	while (++i <= param->info[0])
+	while (++i <= param->philo_count)
 	{
 		param->id = i;
 		if (pthread_create(&param->tid[i - 1], NULL, my_func, param) != 0)
@@ -112,7 +112,7 @@ int philo(t_param *param)
 		usleep(1000);
 	}	
 	i = 0;
-	while (i < param->info[0])
+	while (i < param->philo_count)
 		if (pthread_join(param->tid[i++], NULL) != 0)
 			return (-1);
 	return (0);

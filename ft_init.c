@@ -6,7 +6,7 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 17:24:57 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/20 13:02:23 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/20 13:19:53 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,14 @@ int	ft_init(int argc, char **argv, t_param *param)
 		return (-1);
 	if (argc == 6 && !ft_is_pos_digit(argv[5]))
 		return (-1);
-	param->info[0] = ft_atoi(argv[1]);
-	param->info[1] = ft_atoi(argv[2]);
-	param->info[2] = ft_atoi(argv[3]);
-	param->info[3] = ft_atoi(argv[4]);
+	param->philo_count = ft_atoi(argv[1]);
+	param->time_die = ft_atoi(argv[2]);
+	param->time_eat = ft_atoi(argv[3]);
+	param->time_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 	{
 		param->six = 1;
-		param->info[4] = ft_atoi(argv[5]);
+		param->eat_goal = ft_atoi(argv[5]);
 	}
 	return (0);
 }
