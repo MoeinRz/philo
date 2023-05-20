@@ -6,35 +6,34 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:23:00 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/20 13:30:44 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/20 14:19:38 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int ft_strlen(char *s)
+size_t	ft_strlen(char const *str)
 {
-	int i;
+	unsigned int	len;
 
-	i = 0;
-	while (s && s[i])
-		i++;
-	return (i);
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
 }
 
-double get_time(void)
+double	get_time(void)
 {
-	struct timeval tv;
+	struct timeval	time;
 
-	if (gettimeofday(&tv, NULL) == -1)
+	if (gettimeofday(&time, NULL) == -1)
 		return (-1);
-
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-int check_eat(t_param *param)
+int	check_eat(t_param *param)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < param->philo_count)

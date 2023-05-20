@@ -6,28 +6,15 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:22:39 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/20 13:21:49 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/20 14:39:25 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// int set_info(char *s, int i, t_param *param)
-// {
-// 	int num;
-
-// 	num = ft_atoi(s);
-// 	if (i == 0 && num <= 0)
-// 		return (-1);
-// 	if (i && num < 0)
-// 		return (-1);
-// 	param->info[i] = num;
-// 	return (0);
-// }
-
-int init_param(t_param *param)
+int	init_param(t_param *param)
 {
-	int i;
+	int	i;
 
 	if (param->six == 1)
 	{
@@ -39,10 +26,8 @@ int init_param(t_param *param)
 			param->eat_time[i++] = 0;
 	}
 	param->last_meal = (int *)malloc(sizeof(int) * param->philo_count);
-	if (!param->last_meal)
-		return (-1);
 	param->fork = (int *)malloc(sizeof(int) * param->philo_count);
-	if (!param->fork)
+	if (!param->fork || !param->last_meal)
 		return (-1);
 	i = 0;
 	while (i < param->philo_count)
@@ -61,7 +46,7 @@ int init_param(t_param *param)
 	return (0);
 }
 
-int init_each(t_param *param, t_each *each)
+int	init_each(t_param *param, t_each *each)
 {
 	each->id = param->id;
 	param->last_meal[each->id - 1] = 0;

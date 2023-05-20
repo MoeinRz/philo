@@ -6,7 +6,7 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:22:56 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/20 13:20:32 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/20 14:22:02 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@
 typedef struct s_param
 {
 	int				six;
-	int				info[5];
 	int				philo_count;
 	int				time_die;
 	int				time_eat;
@@ -51,29 +50,27 @@ typedef struct s_param
 
 typedef struct s_each
 {
-	int id;
-	int left;
-	int right;
-	int have_eat;
-	double start;
-	double end;
-} t_each;
+	int		id;
+	int		left;
+	int		right;
+	int		have_eat;
+	double	start;
+	double	end;
+}	t_each;
 
-int	ft_init(int argc, char **argv, t_param *param);
-int ft_strlen(char *s);
-// int ft_atoi(char *s);
-int	ft_atoi(const char *str);
-// int set_info(char *s, int i, t_param *param);
-int init_param(t_param *param);
-int init_each(t_param *param, t_each *each);
-double get_time(void);
-int check_eat(t_param *param);
-int e_take_fork(t_param *param, t_each each);
-int o_take_fork(t_param *param, t_each each);
-int eat(t_param *param, t_each each);
-int sleeping(t_param *param, t_each each);
-int philo(t_param *param);
-void *my_func(void *arg);
-void *monitoring(void *arg);
+int		ft_init(int argc, char **argv, t_param *param);
+size_t	ft_strlen(char const *str);
+int		ft_atoi(const char *str);
+int		init_param(t_param *param);
+int		init_each(t_param *param, t_each *each);
+double	get_time(void);
+int		check_eat(t_param *param);
+int		e_take_fork(t_param *param, t_each each);
+int		o_take_fork(t_param *param, t_each each);
+int		eat(t_param *param, t_each each);
+int		sleeping(t_param *param, t_each each);
+int		philo(t_param *param);
+void	*my_func(void *arg);
+void	*monitoring(void *arg);
 
 #endif
