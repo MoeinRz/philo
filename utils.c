@@ -6,7 +6,7 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:23:00 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/20 14:19:38 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/20 16:13:24 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	ft_strlen(char const *str)
 	return (len);
 }
 
-double	get_time(void)
+long	get_time(void)
 {
 	struct timeval	time;
 

@@ -6,11 +6,11 @@
 #    By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/20 12:22:49 by mrezaei           #+#    #+#              #
-#    Updated: 2023/05/20 12:45:30 by mrezaei          ###   ########.fr        #
+#    Updated: 2023/05/20 16:08:42 by mrezaei          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+CC = cc
 CFLAG = -Wall -Wextra -Werror
 OPTION = -pthread
 

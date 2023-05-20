@@ -6,7 +6,7 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:22:56 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/20 14:22:02 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/20 16:13:41 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ size_t	ft_strlen(char const *str);
 int		ft_atoi(const char *str);
 int		init_param(t_param *param);
 int		init_each(t_param *param, t_each *each);
-double	get_time(void);
+long	get_time(void);
 int		check_eat(t_param *param);
 int		e_take_fork(t_param *param, t_each each);
 int		o_take_fork(t_param *param, t_each each);

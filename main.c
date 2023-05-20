@@ -6,19 +6,19 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:22:45 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/20 14:44:19 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/20 16:08:23 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void *monitoring(void *arg)
+void	*monitoring(void *arg)
 {
-	t_param *param;
-	int i;
-	int locks;
-	double start;
-	double init;
+	t_param	*param;
+	int		i;
+	int		locks;
+	double	start;
+	double	init;
 
 	param = (t_param *)arg;
 
@@ -32,7 +32,7 @@ void *monitoring(void *arg)
 		if (param->six == 1 && check_eat(param) == 1)
 		{
 			param->is_dead = 0;
-			break;
+			break ;
 		}
 		i = 0;
 		while (i < param->philo_count)
@@ -45,7 +45,7 @@ void *monitoring(void *arg)
 				locks = param->time_die;
 				while (locks)
 					pthread_mutex_unlock(&param->mutex[locks--]);
-				break;
+				break ;
 			}
 			i++;
 		}
@@ -82,7 +82,7 @@ void	*my_func(void *arg)
 					if (param->is_dead)
 						sleeping(param, each);
 					if (param->is_dead)
-						printf(GREEN"%.f ms philo[%d] is thinking\n"RESET, get_time() - each.start, each.id);
+						printf("%.f ms philo[%d] is thinking\n", get_time() - each.start, each.id);
 				}
 			}
 		}
@@ -128,12 +128,12 @@ int	main(int argc, char **argv)
 	}
 	if (ft_init(argc, argv, &param))
 	{
-		printf(RED"Invalid arguments or error :)\n"RESET);
+		printf(RED"Invalid arguments or error\n"RESET);
 		return (1);
 	}
 	if (init_param(&param))
 		return (1);
-	if (philo(&param) == -1)
+	if (philo(&param))
 	{
 		printf(RED"Error\n"RESET);
 		return (1);
