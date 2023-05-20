@@ -6,7 +6,7 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:22:56 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/20 16:13:41 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/20 16:17:30 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,15 @@ typedef struct s_param
 	int				time_sleep;
 	int				time_think;
 	int				eat_goal;
-	pthread_t		*tid;
-	pthread_t		m_tid;
-	pthread_mutex_t	stop;
-	pthread_mutex_t	*mutex;
 	int				*fork;
 	int				id;
 	int				is_dead;
 	int				*last_meal;
 	int				*eat_time;
+	pthread_t		*tid;
+	pthread_t		m_tid;
+	pthread_mutex_t	stop;
+	pthread_mutex_t	*mutex;
 }	t_param;
 
 typedef struct s_each
