@@ -6,7 +6,7 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 17:24:57 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/20 13:19:53 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/20 16:44:23 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int	ft_init(int argc, char **argv, t_param *param)
 	param->time_die = ft_atoi(argv[2]);
 	param->time_eat = ft_atoi(argv[3]);
 	param->time_sleep = ft_atoi(argv[4]);
+	param->six = 0;
 	if (argc == 6)
 	{
 		param->six = 1;
