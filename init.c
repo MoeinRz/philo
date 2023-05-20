@@ -6,7 +6,7 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:22:39 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/20 15:55:21 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/20 17:04:31 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,3 @@ int	init_param(t_param *param)
 	return (0);
 }
 
-int	init_each(t_param *param, t_each *each)
-{
-	each->id = param->id;
-	param->last_meal[each->id - 1] = 0;
-	if (each->id == 1)
-		each->left = 0;
-	else
-		each->left = each->id - 1;
-	if (each->id == param->philo_count)
-		each->right = 0;
-	else
-		each->right = each->id;
-	if (each->left == each->right)
-		return (0);
-	usleep((param->philo_count + 1 - each->id) * 1000);
-	each->start = get_time();
-	return (1);
-}

@@ -6,7 +6,7 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:22:45 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/20 16:27:09 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/20 17:57:31 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,25 @@ void	*monitoring(void *arg)
 	return (0);
 }
 
+int	init_each(t_param *param, t_each *each)
+{
+	each->id = param->id;
+	param->last_meal[each->id - 1] = 0;
+	if (each->id == 1)
+		each->left = 0;
+	else
+		each->left = each->id - 1;
+	if (each->id == param->philo_count)
+		each->right = 0;
+	else
+		each->right = each->id;
+	if (each->left == each->right)
+		return (0);
+	usleep((param->philo_count + 1 - each->id) * 1000);
+	each->start = get_time();
+	return (1);
+}
+
 void	*my_func(void *arg)
 {
 	t_param	*param;
@@ -74,7 +93,10 @@ void	*my_func(void *arg)
 			if (param->is_dead)
 			{
 				pthread_mutex_lock(&param->stop);
-				ret = e_take_fork(param, each);
+				// if (each.id % 2 == 0)
+					ret = e_take_fork(param, each);
+				// else
+				// 	ret = o_take_fork(param, each);
 				pthread_mutex_unlock(&param->stop);
 				if (ret == 1)
 				{
