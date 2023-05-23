@@ -1,17 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:23:00 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/20 16:13:24 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/23 17:34:46 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philosophers.h"
 
+//===========================================================================//
+//find the len of str                                                        //
+//===========================================================================//
 size_t	ft_strlen(char const *str)
 {
 	unsigned int	len;
@@ -22,15 +25,23 @@ size_t	ft_strlen(char const *str)
 	return (len);
 }
 
+//===========================================================================//
+//get time and return ms                                                     //
+//===========================================================================//
 long	get_time(void)
 {
 	struct timeval	time;
+	int				tmp;
 
 	if (gettimeofday(&time, NULL) == -1)
 		return (-1);
-	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+	tmp = time.tv_sec * 1000 + time.tv_usec / 1000;
+	return (tmp);
 }
 
+//===========================================================================//
+//check if all philosophers have reached their eat goal                      //
+//===========================================================================//
 int	check_eat(t_param *param)
 {
 	int	i;

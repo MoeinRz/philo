@@ -6,11 +6,11 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 17:24:57 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/20 16:44:23 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/23 17:34:41 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philosophers.h"
 
 //===========================================================================//
 //check it is digit or not                                                   //
@@ -18,9 +18,7 @@
 int	ft_isnumber(int a)
 {
 	if (a <= '9' && a >= '0')
-	{
 		return (a);
-	}
 	else
 		return (0);
 }
@@ -90,7 +88,7 @@ int	ft_atoi(const char *str)
 }
 
 //===========================================================================//
-//                                                  //
+//initialize the data struct based on argv                                   //
 //===========================================================================//
 int	ft_init(int argc, char **argv, t_param *param)
 {

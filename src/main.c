@@ -6,24 +6,45 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:22:45 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/20 17:57:31 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/23 17:34:53 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philosophers.h"
+
+void	update_last_meal(t_param *param, double init)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < param->philo_count)
+	{
+		param->last_meal[i] += 1;
+		if (param->last_meal[i] >= param->time_die)
+		{
+			param->is_dead = 0;
+			printf(RED"%.f ms philo[%d] died\n"RESET, get_time() - init, i + 1);
+			j = param->time_die;
+			while (j >= 0)
+			{
+				pthread_mutex_unlock(&param->mutex[j]);
+				j--;
+			}
+			break ;
+		}
+	}
+}
 
 void	*monitoring(void *arg)
 {
 	t_param	*param;
-	int		i;
-	int		locks;
 	double	start;
 	double	init;
 
 	param = (t_param *)arg;
-
-	usleep(2000 * (param->philo_count - 1));
 	init = get_time();
+	usleep(2000 * (param->philo_count - 1));
 	while (param->is_dead)
 	{
 		start = get_time();
@@ -34,23 +55,9 @@ void	*monitoring(void *arg)
 			param->is_dead = 0;
 			break ;
 		}
-		i = 0;
-		while (i < param->philo_count)
-		{
-			param->last_meal[i] += 1;
-			if (param->last_meal[i] >= param->time_die)
-			{
-				param->is_dead = 0;
-				printf("%.f ms philo%d died\n", get_time() - init, i + 1);
-				locks = param->time_die;
-				while (locks)
-					pthread_mutex_unlock(&param->mutex[locks--]);
-				break ;
-			}
-			i++;
-		}
+		update_last_meal(param, init);
 	}
-	return (0);
+	return (NULL);
 }
 
 int	init_each(t_param *param, t_each *each)
@@ -93,10 +100,7 @@ void	*my_func(void *arg)
 			if (param->is_dead)
 			{
 				pthread_mutex_lock(&param->stop);
-				// if (each.id % 2 == 0)
-					ret = e_take_fork(param, each);
-				// else
-				// 	ret = o_take_fork(param, each);
+				ret = e_take_fork(param, each);
 				pthread_mutex_unlock(&param->stop);
 				if (ret == 1)
 				{
@@ -109,30 +113,53 @@ void	*my_func(void *arg)
 			}
 		}
 	}
-	return (0);
+	return (NULL);
 }
 
-
-int	philo(t_param *param)
+int	create_philosophers(t_param *param)
 {
 	int	i;
 
-	pthread_mutex_init(&param->stop, NULL);
-	if (pthread_create(&param->m_tid, NULL, monitoring, param) != 0)
-		return (-1);
-	pthread_detach(param->m_tid);
 	i = 0;
 	while (++i <= param->philo_count)
 	{
 		param->id = i;
 		if (pthread_create(&param->tid[i - 1], NULL, my_func, param) != 0)
+		{
+			printf(RED"Failed to create thread for philosopher %d\n"RESET, i);
 			return (-1);
+		}
 		usleep(1000);
-	}	
+	}
+	return (0);
+}
+
+int	philo(t_param *param)
+{
+	int	i;
+
+	if (pthread_mutex_init(&param->stop, NULL) != 0)
+	{
+		printf(RED"Failed to initialize mutex\n"RESET);
+		return (-1);
+	}
+	if (pthread_create(&param->m_tid, NULL, monitoring, param) != 0)
+	{
+		printf(RED"Failed to create monitoring thread\n"RESET);
+		return (-1);
+	}
+	pthread_detach(param->m_tid);
+	if (create_philosophers(param) != 0)
+		return (-1);
 	i = 0;
 	while (i < param->philo_count)
+	{
 		if (pthread_join(param->tid[i++], NULL) != 0)
+		{
+			printf(RED"Failed to join thread for philosopher %d\n"RESET, i);
 			return (-1);
+		}
+	}
 	return (0);
 }
 
