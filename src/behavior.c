@@ -6,47 +6,11 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:22:34 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/23 19:00:02 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/23 23:02:29 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
-
-// int	o_take_fork(t_info *param, t_each each)
-// {
-// 	if (param->fork[each.left] == 0 && param->fork[each.right] == 0)
-// 	{
-// 		if (pthread_mutex_lock(&param->mutex[each.right]))
-// 			return (-1);
-// 		param->fork[each.right] = 1;
-// 		if (param->is_dead == 0)
-// 		{	
-// 			pthread_mutex_unlock(&param->mutex[each.right]);
-// 			param->fork[each.right] = 0;
-// 			pthread_mutex_unlock(&param->stop);
-// 			return (-1);
-// 		}
-// 		printf("%.f ms philo[%d] has taken a right fork\n", get_time() - each.start, each.id);
-// 		if (pthread_mutex_lock(&param->mutex[each.left]) != 0)
-// 		{
-// 			pthread_mutex_unlock(&param->mutex[each.right]);
-// 			param->fork[each.right] = 0;
-// 			pthread_mutex_unlock(&param->stop);
-// 			return (-1);
-// 		}
-// 		param->fork[each.left] = 1;
-// 		if (param->is_dead == 0)
-// 		{	
-// 			pthread_mutex_unlock(&param->mutex[each.left]);
-// 			param->fork[each.left] = 0;
-// 			return (-1);
-// 		}
-// 		printf("%.f ms philo[%d] has taken a left fork\n", get_time() - each.start, each.id);
-// 		return (1);
-// 	}
-// 	pthread_mutex_unlock(&param->stop);
-// 	return (-1);
-// }
 
 int	e_take_fork(t_info *param, t_each each)
 {
@@ -56,12 +20,11 @@ int	e_take_fork(t_info *param, t_each each)
 			return (-1);
 		param->fork[each.left] = 1;
 		if (param->is_dead == 0)
-		{	
+		{
 			pthread_mutex_unlock(&param->mutex[each.left]);
 			param->fork[each.left] = 0;
 			return (-1);
 		}
-		printf("%.f ms philo[%d] take a leftfork\n", get_time() - each.start, each.id);
 		if (pthread_mutex_lock(&param->mutex[each.right]) != 0)
 		{
 			pthread_mutex_unlock(&param->mutex[each.left]);
@@ -70,11 +33,12 @@ int	e_take_fork(t_info *param, t_each each)
 		}
 		param->fork[each.right] = 1;
 		if (param->is_dead == 0)
-		{	
+		{
 			pthread_mutex_unlock(&param->mutex[each.right]);
 			param->fork[each.right] = 0;
 			return (-1);
 		}
+		printf("%.f ms philo[%d] take a leftfork\n", get_time() - each.start, each.id);
 		printf("%.f ms philo[%d] take a rightfork\n", get_time() - each.start, each.id);
 		return (1);
 	}
@@ -117,7 +81,6 @@ int	eat(t_info *param, t_each each)
 	param->fork[each.left] = 0;
 	return (1);
 }
-
 
 int	sleeping(t_info *param, t_each each)
 {
