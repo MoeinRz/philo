@@ -6,7 +6,7 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:22:56 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/23 17:32:06 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/23 18:19:51 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define CYAN    "\x1b[36m"
 # define RESET   "\x1b[0m"
 
-typedef struct s_param
+typedef struct s_info
 {
 	int				six;
 	int				philo_count;
@@ -46,7 +46,7 @@ typedef struct s_param
 	int				is_dead;
 	int				*last_meal;
 	int				*eat_time;
-}	t_param;
+}	t_info;
 
 typedef struct s_each
 {
@@ -58,18 +58,18 @@ typedef struct s_each
 	double	end;
 }	t_each;
 
-int		ft_init(int argc, char **argv, t_param *param);
+int		ft_init(int argc, char **argv, t_info *param);
 size_t	ft_strlen(char const *str);
 int		ft_atoi(const char *str);
-int		init_param(t_param *param);
-int		init_each(t_param *param, t_each *each);
+int		init_info(t_info *param);
+int		init_each(t_info *param, t_each *each);
 long	get_time(void);
-int		check_eat(t_param *param);
-int		e_take_fork(t_param *param, t_each each);
-int		o_take_fork(t_param *param, t_each each);
-int		eat(t_param *param, t_each each);
-int		sleeping(t_param *param, t_each each);
-int		philo(t_param *param);
+int		check_eat(t_info *param);
+int		e_take_fork(t_info *param, t_each each);
+int		o_take_fork(t_info *param, t_each each);
+int		eat(t_info *param, t_each each);
+int		sleeping(t_info *param, t_each each);
+int		philo(t_info *param);
 void	*my_func(void *arg);
 void	*monitoring(void *arg);
 

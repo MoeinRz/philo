@@ -6,7 +6,7 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 17:24:57 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/23 17:34:41 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/23 18:19:26 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	ft_atoi(const char *str)
 //===========================================================================//
 //initialize the data struct based on argv                                   //
 //===========================================================================//
-int	ft_init(int argc, char **argv, t_param *param)
+int	ft_init(int argc, char **argv, t_info *param)
 {
 	if (!ft_is_pos_digit(argv[1]) || !ft_is_pos_digit(argv[2])
 		|| !ft_is_pos_digit(argv[3]) || !ft_is_pos_digit(argv[4]))

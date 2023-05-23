@@ -6,13 +6,13 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:22:45 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/23 17:34:53 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/23 18:19:26 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-void	update_last_meal(t_param *param, double init)
+void	update_last_meal(t_info *param, double init)
 {
 	int	i;
 	int	j;
@@ -38,11 +38,11 @@ void	update_last_meal(t_param *param, double init)
 
 void	*monitoring(void *arg)
 {
-	t_param	*param;
+	t_info	*param;
 	double	start;
 	double	init;
 
-	param = (t_param *)arg;
+	param = (t_info *)arg;
 	init = get_time();
 	usleep(2000 * (param->philo_count - 1));
 	while (param->is_dead)
@@ -60,7 +60,7 @@ void	*monitoring(void *arg)
 	return (NULL);
 }
 
-int	init_each(t_param *param, t_each *each)
+int	init_each(t_info *param, t_each *each)
 {
 	each->id = param->id;
 	param->last_meal[each->id - 1] = 0;
@@ -81,11 +81,11 @@ int	init_each(t_param *param, t_each *each)
 
 void	*my_func(void *arg)
 {
-	t_param	*param;
+	t_info	*param;
 	t_each	each;
 	int		ret;
 
-	param = (t_param *)arg;
+	param = (t_info *)arg;
 	if (!init_each(param, &each))
 	{
 		while (param->is_dead)
@@ -116,7 +116,7 @@ void	*my_func(void *arg)
 	return (NULL);
 }
 
-int	create_philosophers(t_param *param)
+int	create_philosophers(t_info *param)
 {
 	int	i;
 
@@ -134,7 +134,7 @@ int	create_philosophers(t_param *param)
 	return (0);
 }
 
-int	philo(t_param *param)
+int	philo(t_info *param)
 {
 	int	i;
 
@@ -165,7 +165,7 @@ int	philo(t_param *param)
 
 int	main(int argc, char **argv)
 {
-	t_param	param;
+	t_info	param;
 
 	param.six = 0;
 	if (argc != 5 && argc != 6)
@@ -180,7 +180,7 @@ int	main(int argc, char **argv)
 		printf(RED"Invalid arguments or error\n"RESET);
 		return (1);
 	}
-	if (init_param(&param))
+	if (init_info(&param))
 		return (1);
 	if (philo(&param))
 	{
