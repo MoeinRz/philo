@@ -6,7 +6,7 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:22:56 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/23 22:51:05 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/26 12:58:31 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,16 @@ typedef struct s_each
 	double	end;
 }	t_each;
 
+typedef struct s_count
+{
+	int	counter;
+}	t_count;
+
+
 int		ft_init(int argc, char **argv, t_info *param);
 size_t	ft_strlen(char const *str);
 int		ft_atoi(const char *str);
-int		init_info(t_info *param);
+int		init_mutex(t_info *param);
 int		init_each(t_info *param, t_each *each);
 long	get_time(void);
 int		check_eat(t_info *param);
@@ -70,7 +76,7 @@ int		o_take_fork(t_info *param, t_each each);
 int		eat(t_info *param, t_each each);
 int		sleeping(t_info *param, t_each each);
 int		philo(t_info *param);
-void	*my_func(void *arg);
+void	*ft_life(void *arg);
 void	*monitoring(void *arg);
 
 #endif

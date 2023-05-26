@@ -6,14 +6,14 @@
 #    By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/20 12:22:49 by mrezaei           #+#    #+#              #
-#    Updated: 2023/05/23 18:11:57 by mrezaei          ###   ########.fr        #
+#    Updated: 2023/05/25 21:58:22 by mrezaei          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC 			=	cc
 CFLAGS 		=	-Wall -Wextra -Werror
 OPTION 		=	-pthread
-NAME 		=	philosophers
+NAME 		=	philo
 CFILES		=	$(shell find ./src -name "*.c" -type f)
 OBJECTS		=	$(CFILES:.c=.o)
 
