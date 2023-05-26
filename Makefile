@@ -6,7 +6,7 @@
 #    By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/20 12:22:49 by mrezaei           #+#    #+#              #
-#    Updated: 2023/05/26 21:20:37 by mrezaei          ###   ########.fr        #
+#    Updated: 2023/05/26 21:27:11 by mrezaei          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ all : $(NAME)
 $(NAME) : $(OBJECTS)
 	      $(CC) $(CFLAGS) -o $(NAME) $(OBJECTS) $(OPTION)
 	@echo $(G)==================================$(X)
-	@echo $(G)Compiled Successfully
+	@echo $(G)Make Successfully
 	@echo $(G)The output file is [$(NAME)]$(X)
 	@echo $(G)==================================$(X)
 	@echo
@@ -40,7 +40,10 @@ $(NAME) : $(OBJECTS)
 $(OBJECTS) : %.o : %.c
 	@echo $(Y)Compiling [$<]...
 	$(CC) $(CFLAGS) -c $< -o $@ $(OPTION)
-	@echo $(Y)Finish Compiling $<]...$(X)
+	@echo $(Y)==================================$(X)
+	@echo $(Y)Finish Compiling $<]$(X)
+	@echo $(Y)==================================$(X)
+	@echo
 
 clean:
 	rm -rf $(OBJECTS)
