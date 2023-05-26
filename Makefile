@@ -6,7 +6,7 @@
 #    By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/20 12:22:49 by mrezaei           #+#    #+#              #
-#    Updated: 2023/05/26 21:01:55 by mrezaei          ###   ########.fr        #
+#    Updated: 2023/05/26 21:20:37 by mrezaei          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,8 +38,9 @@ $(NAME) : $(OBJECTS)
 	@echo
 
 $(OBJECTS) : %.o : %.c
-	@echo $(Y)Compiling [$<]...$(X)
+	@echo $(Y)Compiling [$<]...
 	$(CC) $(CFLAGS) -c $< -o $@ $(OPTION)
+	@echo $(Y)Finish Compiling $<]...$(X)
 
 clean:
 	rm -rf $(OBJECTS)
