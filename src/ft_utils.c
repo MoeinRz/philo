@@ -6,7 +6,7 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:23:00 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/26 12:58:25 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/26 18:37:15 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ long	get_time(void)
 //===========================================================================//
 //check if all philosophers have reached their eat goal                      //
 //===========================================================================//
-int	check_eat(t_info *param)
+int	check_eat(t_info *info)
 {
 	int	i;
 
 	i = 0;
-	while (i < param->philo_count)
+	while (i < info->philo_count)
 	{
-		if (param->eat_time[i++] < param->eat_goal)
+		if (info->eat_time[i++] < info->eat_goal)
 			return (-1);
 	}
 	return (1);

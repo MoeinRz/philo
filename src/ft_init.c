@@ -6,7 +6,7 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 17:24:57 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/23 18:19:26 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/26 15:09:09 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,22 +90,22 @@ int	ft_atoi(const char *str)
 //===========================================================================//
 //initialize the data struct based on argv                                   //
 //===========================================================================//
-int	ft_init(int argc, char **argv, t_info *param)
+int	ft_init(int argc, char **argv, t_info *info)
 {
 	if (!ft_is_pos_digit(argv[1]) || !ft_is_pos_digit(argv[2])
 		|| !ft_is_pos_digit(argv[3]) || !ft_is_pos_digit(argv[4]))
 		return (-1);
 	if (argc == 6 && !ft_is_pos_digit(argv[5]))
 		return (-1);
-	param->philo_count = ft_atoi(argv[1]);
-	param->time_die = ft_atoi(argv[2]);
-	param->time_eat = ft_atoi(argv[3]);
-	param->time_sleep = ft_atoi(argv[4]);
-	param->six = 0;
+	info->philo_count = ft_atoi(argv[1]);
+	info->time_die = ft_atoi(argv[2]);
+	info->time_eat = ft_atoi(argv[3]);
+	info->time_sleep = ft_atoi(argv[4]);
+	info->six = 0;
 	if (argc == 6)
 	{
-		param->six = 1;
-		param->eat_goal = ft_atoi(argv[5]);
+		info->six = 1;
+		info->eat_goal = ft_atoi(argv[5]);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:22:56 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/26 12:58:31 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/26 16:35:10 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define MAGENTA "\x1b[35m"
 # define CYAN    "\x1b[36m"
 # define RESET   "\x1b[0m"
+
 
 typedef struct s_info
 {
@@ -58,20 +59,16 @@ typedef struct s_each
 	double	end;
 }	t_each;
 
-typedef struct s_count
-{
-	int	counter;
-}	t_count;
 
 
 int		ft_init(int argc, char **argv, t_info *param);
 size_t	ft_strlen(char const *str);
 int		ft_atoi(const char *str);
 int		init_mutex(t_info *param);
-int		init_each(t_info *param, t_each *each);
+void	init_each(t_info *param, t_each *each);
 long	get_time(void);
 int		check_eat(t_info *param);
-int		e_take_fork(t_info *param, t_each each);
+int		take_fork(t_info *param, t_each each);
 int		o_take_fork(t_info *param, t_each each);
 int		eat(t_info *param, t_each each);
 int		sleeping(t_info *param, t_each each);

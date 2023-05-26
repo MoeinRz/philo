@@ -6,7 +6,7 @@
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:22:45 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/26 12:47:20 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/26 16:36:20 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	*monitoring(void *arg)
 	return (NULL);
 }
 
-int	init_each(t_info *info, t_each *each)
+void	init_each(t_info *info, t_each *each)
 {
 	pthread_mutex_lock(&info->stop);
 	each->id = info->id;
@@ -76,45 +76,39 @@ int	init_each(t_info *info, t_each *each)
 	if (each->left == each->right)
 	{
 		pthread_mutex_unlock(&info->stop);
-		return (0);
+		while (info->is_dead)
+		{
+		}
 	}
 	each->start = get_time();
 	pthread_mutex_unlock(&info->stop);
-	usleep((info->philo_count - each->id + 1) * 1000);
-	return (1);
+	usleep((1 + info->philo_count - each->id) * 1000);
+	return ;
 }
 
 void	*ft_life(void *arg)
 {
 	t_info	*info;
 	t_each	each;
-	int		ret;
+	int		fork;
 
 	info = (t_info *)arg;
-	if (!init_each(info, &each))
+	init_each(info, &each);
+	while (info->is_dead)
 	{
-		while (info->is_dead)
+		each.have_eat = 0;
+		if (info->is_dead)
 		{
-		}
-	}
-	else
-	{
-		while (info->is_dead)
-		{
-			each.have_eat = 0;
-			if (info->is_dead)
+			pthread_mutex_lock(&info->stop);
+			fork = take_fork(info, each);
+			pthread_mutex_unlock(&info->stop);
+			if (fork == 1)
 			{
-				pthread_mutex_lock(&info->stop);
-				ret = e_take_fork(info, each);
-				pthread_mutex_unlock(&info->stop);
-				if (ret == 1)
-				{
-					eat(info, each);
-					if (info->is_dead)
-						sleeping(info, each);
-					if (info->is_dead)
-						printf("%.f ms philo[%d] is thinking\n", get_time() - each.start, each.id);
-				}
+				eat(info, each);
+				if (info->is_dead)
+					sleeping(info, each);
+				if (info->is_dead)
+					printf("%.f ms philo[%d] is thinking\n", get_time() - each.start, each.id);
 			}
 		}
 	}
@@ -169,6 +163,27 @@ int	philo(t_info *info)
 	return (0);
 }
 
+void cleanup(t_info *info)
+{
+	int	i;
+
+	if (info->last_meal)
+		free(info->last_meal);
+	if (info->fork)
+		free(info->fork);
+	if (info->tid)
+		free(info->tid);
+	if (info->mutex)
+		free(info->mutex);
+	pthread_mutex_destroy(&info->stop);
+	i = 0;
+	while (i < info->philo_count)
+	{
+		pthread_mutex_destroy(&info->mutex[i]);
+		i++;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_info	info;
@@ -188,11 +203,11 @@ int	main(int argc, char **argv)
 	}
 	if (init_mutex(&info))
 		return (1);
-
 	if (philo(&info))
 	{
 		printf(RED"Error\n"RESET);
 		return (1);
 	}
+	cleanup(&info);
 	return (0);
 }
