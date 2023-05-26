@@ -1,91 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:22:45 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/26 16:36:20 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/26 20:54:25 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-void	update_last_meal(t_info *info, double init)
+//===========================================================================//
+//eat, sleeping, and thinking                                                //
+//===========================================================================//
+void	ft_life_action(t_info *info, t_each each)
 {
-	int	i;
-	int	j;
-
-	i = -1;
-	while (++i < info->philo_count)
-	{
-		info->last_meal[i] += 1;
-		if (info->last_meal[i] >= info->time_die)
-		{
-			info->is_dead = 0;
-			printf(RED"%.f ms philo[%d] died\n"RESET, get_time() - init, i + 1);
-			j = info->time_die;
-			while (j >= 0)
-			{
-				pthread_mutex_unlock(&info->mutex[j]);
-				j--;
-			}
-			break ;
-		}
-	}
+	ft_eat(info, each);
+	if (info->is_dead)
+		ft_sleeping(info, each);
+	if (info->is_dead)
+		printf("%.f ms philo[%d] is thinking\n", \
+				get_time() - each.start, each.id);
 }
 
-void	*monitoring(void *arg)
-{
-	t_info	*info;
-	double	start;
-	double	init;
-
-	info = (t_info *)arg;
-	init = get_time();
-	usleep(2000 * (info->philo_count - 1));
-	while (info->is_dead)
-	{
-		start = get_time();
-		while ((get_time() - start) < 1)
-			usleep(1);
-		if (info->six == 1 && check_eat(info) == 1)
-		{
-			info->is_dead = 0;
-			break ;
-		}
-		update_last_meal(info, init);
-	}
-	return (NULL);
-}
-
-void	init_each(t_info *info, t_each *each)
-{
-	pthread_mutex_lock(&info->stop);
-	each->id = info->id;
-	info->last_meal[each->id - 1] = 0;
-	if (each->id == 1)
-		each->left = 0;
-	else
-		each->left = each->id - 1;
-	if (each->id == info->philo_count)
-		each->right = 0;
-	else
-		each->right = each->id;
-	if (each->left == each->right)
-	{
-		pthread_mutex_unlock(&info->stop);
-		while (info->is_dead)
-		{
-		}
-	}
-	each->start = get_time();
-	pthread_mutex_unlock(&info->stop);
-	usleep((1 + info->philo_count - each->id) * 1000);
-	return ;
-}
-
+//===========================================================================//
+//the main lifecycle of each philo                                           //
+//===========================================================================//
 void	*ft_life(void *arg)
 {
 	t_info	*info;
@@ -93,7 +35,7 @@ void	*ft_life(void *arg)
 	int		fork;
 
 	info = (t_info *)arg;
-	init_each(info, &each);
+	ft_fork_index(info, &each);
 	while (info->is_dead)
 	{
 		each.have_eat = 0;
@@ -103,19 +45,15 @@ void	*ft_life(void *arg)
 			fork = take_fork(info, each);
 			pthread_mutex_unlock(&info->stop);
 			if (fork == 1)
-			{
-				eat(info, each);
-				if (info->is_dead)
-					sleeping(info, each);
-				if (info->is_dead)
-					printf("%.f ms philo[%d] is thinking\n", get_time() - each.start, each.id);
-			}
+				ft_life_action(info, each);
 		}
 	}
 	return (NULL);
 }
 
-
+//===========================================================================//
+//create thread for each philosophers                                        //
+//===========================================================================//
 int	create_philosophers(t_info *info)
 {
 	int	i;
@@ -134,6 +72,10 @@ int	create_philosophers(t_info *info)
 	return (0);
 }
 
+//===========================================================================//
+// initializes the necessary components, creates threads for monitoring and  //
+// philosophers, and joins the philosopher threads.                          //
+//===========================================================================//
 int	philo(t_info *info)
 {
 	int	i;
@@ -143,7 +85,7 @@ int	philo(t_info *info)
 		printf(RED"Failed to initialize mutex\n"RESET);
 		return (-1);
 	}
-	if (pthread_create(&info->m_tid, NULL, monitoring, info) != 0)
+	if (pthread_create(&info->m_tid, NULL, ft_check_life, info) != 0)
 	{
 		printf(RED"Failed to create monitoring thread\n"RESET);
 		return (-1);
@@ -163,32 +105,14 @@ int	philo(t_info *info)
 	return (0);
 }
 
-void cleanup(t_info *info)
-{
-	int	i;
-
-	if (info->last_meal)
-		free(info->last_meal);
-	if (info->fork)
-		free(info->fork);
-	if (info->tid)
-		free(info->tid);
-	if (info->mutex)
-		free(info->mutex);
-	pthread_mutex_destroy(&info->stop);
-	i = 0;
-	while (i < info->philo_count)
-	{
-		pthread_mutex_destroy(&info->mutex[i]);
-		i++;
-	}
-}
-
+//===========================================================================//
+//the main function                                                          //
+//===========================================================================//
 int	main(int argc, char **argv)
 {
 	t_info	info;
 
-	info.six = 0;
+	info.goal = 0;
 	if (argc != 5 && argc != 6)
 	{
 		printf(RED"Invalid Input\nThe input must be in below format:\n");
@@ -201,13 +125,13 @@ int	main(int argc, char **argv)
 		printf(RED"Invalid arguments or error\n"RESET);
 		return (1);
 	}
-	if (init_mutex(&info))
+	if (ft_init_mutex(&info))
 		return (1);
 	if (philo(&info))
 	{
 		printf(RED"Error\n"RESET);
 		return (1);
 	}
-	cleanup(&info);
+	ft_cleanup(&info);
 	return (0);
 }

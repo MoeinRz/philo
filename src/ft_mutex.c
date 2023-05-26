@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   ft_mutex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrezaei <mrezaei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 12:22:39 by mrezaei           #+#    #+#             */
-/*   Updated: 2023/05/26 15:14:19 by mrezaei          ###   ########.fr       */
+/*   Updated: 2023/05/26 20:50:21 by mrezaei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
 //===========================================================================//
-//find thw len of str                                                        //
+//consider eat_time as a counter for goal                                    //
 //===========================================================================//
 int	ft_action_01(t_info *info)
 {
@@ -29,13 +29,13 @@ int	ft_action_01(t_info *info)
 }
 
 //===========================================================================//
-//find thw len of str                                                        //
+//Initialize mutexes and allocate memory for necessary components			 //
 //===========================================================================//
-int	init_mutex(t_info *info)
+int	ft_init_mutex(t_info *info)
 {
 	int	i;
 
-	if (info->six == 1)
+	if (info->goal == 1)
 		if (ft_action_01(info))
 			return (-1);
 	info->last_meal = (int *)malloc(sizeof(int) * info->philo_count);
@@ -59,4 +59,3 @@ int	init_mutex(t_info *info)
 	info->is_dead = 1;
 	return (0);
 }
-
